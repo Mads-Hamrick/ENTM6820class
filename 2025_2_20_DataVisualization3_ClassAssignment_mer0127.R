@@ -115,6 +115,15 @@ threeB <- ggplot(Mycotoxin, aes(x=Treatment, y=X15ADON, fill=Cultivar))+
 
 threeB
 
+#Saving Plots to Rproject Folder as JPEG
+
+ggsave("DV3_question1.jpeg", plot = one, width = 6, height = 4)
+
+ggsave("DV3_question3A.jpeg", plot = threeA, width = 6, height = 4)
+
+ggsave("DV3_question3B.jpeg", plot = threeB, width = 6, height = 4)
+
+
 ##Question Four
 #Use ggarrange function to combine all three figures into one with three columns and one row.
 #Set the labels for the subplots as A, B and C.Use ggarrange function to combine all three figures 
@@ -196,4 +205,4 @@ combined_plots <- ggarrange(plot1, plot2, plot3,
 
 combined_plots
 
-
+ggsave("combined_plot.jpeg", plot = combined_plots, width = 15, height = 6) #Saving Plot to Rproject Folder
