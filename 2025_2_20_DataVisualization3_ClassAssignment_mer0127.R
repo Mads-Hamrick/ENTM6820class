@@ -143,7 +143,7 @@ plot1 <- ggplot(Mycotoxin, aes(x=Treatment, y=DON, fill=Cultivar)) +
   
   geom_boxplot(outlier.color=NA) +
   geom_point(pch=21, alpha=0.6, color="black", position=position_jitterdodge(dodge.width=0.9)) +
-  geom_pwc(method = "t_test", label = "p.signif")+
+  geom_pwc(aes(group = Treatment),method = "t_test", label = "p.signif", hide.ns = TRUE)+
   
   xlab("") +
   ylab("DON (ppm)") +
@@ -160,7 +160,7 @@ plot1
 plot2 <- ggplot(Mycotoxin, aes(x=Treatment, y=X15ADON, fill=Cultivar)) +
   geom_boxplot(outlier.color=NA) +
   geom_point(pch=21, alpha=0.6, color="black", position=position_jitterdodge(dodge.width=0.9)) +
-  geom_pwc(method = "t_test", label = "p.signif", hide.ns = TRUE)+
+  geom_pwc(aes(group = Treatment),method = "t_test", label = "p.signif", hide.ns = TRUE)+
   
   xlab("") +
   ylab("15ADON") +
@@ -177,7 +177,7 @@ plot2
 plot3 <- ggplot(Mycotoxin, aes(x=Treatment, y=MassperSeed_mg, fill=Cultivar)) +
   geom_boxplot(outlier.color=NA) +
   geom_point(pch=21, alpha=0.6, color="black", position=position_jitterdodge(dodge.width=0.9)) +
-  geom_pwc(aes(group = Treatment) method = "t_test", label = "p.signif")+
+  geom_pwc(aes(group = Treatment), method = "t_test", label = "p.signif")+
   
   xlab("") +
   ylab("Seed Mass (mg)") +
@@ -195,37 +195,5 @@ combined_plots <- ggarrange(plot1, plot2, plot3,
                            labels = c("A", "B", "C"))
 
 combined_plots
-
-
-
-
-
-
-
-
-
-
-
-
-
-##########################################################################################################################
-####OR###
-
-ggplot(Mycotoxin, aes(x=Treatment)) +
-  geom_boxplot(aes(y=X15ADON, fill=Cultivar), outlier.color=NA) +
-  geom_point(aes(y=X15ADON, fill=Cultivar), pch=21, alpha=0.6, color="black", 
-            position=position_jitterdodge(dodge.width=0.9)) +
-  geom_line(aes(y=MassperSeed_mg/10, group=Cultivar, color=Cultivar), size=1) +  # Adjust the scale for secondary axis
-  scale_y_continuous(
-    name = "15ADON",
-    sec.axis = sec_axis(~.*10, name = "Seed Mass (mg)")  # Adjust the scale for secondary axis
-  ) +
-  xlab("") +
-  theme_classic() +
-  scale_fill_manual(values=cbbPalette) +
-  scale_color_manual(values=cbbPalette)
-
-
-
 
 
