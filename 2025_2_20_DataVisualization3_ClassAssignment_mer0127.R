@@ -177,7 +177,7 @@ plot2
 plot3 <- ggplot(Mycotoxin, aes(x=Treatment, y=MassperSeed_mg, fill=Cultivar)) +
   geom_boxplot(outlier.color=NA) +
   geom_point(pch=21, alpha=0.6, color="black", position=position_jitterdodge(dodge.width=0.9)) +
-  geom_pwc(method = "t_test", label = "p.signif")+
+  geom_pwc(aes(group = Treatment) method = "t_test", label = "p.signif")+
   
   xlab("") +
   ylab("Seed Mass (mg)") +
