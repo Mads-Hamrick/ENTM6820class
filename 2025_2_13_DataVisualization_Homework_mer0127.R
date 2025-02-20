@@ -11,8 +11,6 @@ rm(list = ls(all=TRUE)) #Clears Environment to see if code can stand alone
 #Class:ENTM 6820
 #Assignment Name: Data Visualization 
 
-#Late due to missing class on Thursday 2025 February 6 for a out-state presentation
-
 ###################################################################################################################
 #Import data from project
 
