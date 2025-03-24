@@ -16,6 +16,7 @@ Download two .csv files from Canvas called DiversityData.csv and Metadata.csv, a
 ```{r, warning = FALSE}
 
 library(tidyverse)
+
 diversitydata <-read.csv("DiversityData.csv", na.strings= "na")
 metadata <- read.csv("Metadata.csv", na.strings= "na")
 
@@ -58,11 +59,11 @@ Using tidyverse language of functions and the pipe, use the summarise function a
 
 alpha_average<- alpha_even%>% 
   group_by(Crop, Time_Point)%>% 
+  
   summarise(mean.even=mean(even), 
     n=n(),
     std.dev=sd(even), 
-    std.err = (std.dev/sqrt(n))
-  )
+    std.err = (std.dev/sqrt(n)))
 
 head(alpha_average)
 
@@ -92,17 +93,16 @@ head(alpha_average2)
 Connecting it to plots.
  
  a.	Start with the alpha_average2 dataframe
- b.	Select relevant columns: select the columns Time_Point, diff.cotton.even, and
-    diff.soybean.even
+ b.	Select relevant columns: select the columns Time_Point, diff.cotton.even, and diff.soybean.even
  c.	Reshape the data: Use the pivot_longer function to transform the data from wide to long format, creating a new column named diff that contains the values from diff.cotton.even and diff.soybean.even.
     
-   i.	This might be challenging, so I’ll give you a break. The code is below
+      i.	Code given.
 
- d. Create the plot: Use ggplot and geom_line() with ‘Time_Point’ on the x-axis, the column       ‘values’ on the y-axis, and different colors for each ‘diff’ category. The column name ‘values’ come from the pivot_longer. The resulting plot should look like the one to the right
+ d. Create the plot: Use ggplot and geom_line() with ‘Time_Point’ on the x-axis, the column ‘values’ on the y-axis, and different colors for each ‘diff’ category. The column name ‘values’ come from the pivot_longer. The resulting plot should look like the one to the right.
  
 ```{r}
 
-alpha_average2%>% #part 6a
+alpha_average2%>% 
   select(Time_Point,diff.cotton.even, diff.soybean.even)%>% 
   pivot_longer(c(diff.cotton.even, diff.soybean.even), 
                names_to = "diff")%>%
