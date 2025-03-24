@@ -1,0 +1,116 @@
+---
+title: "2025_2_28_Rmarkdown_HomeworkAssignment"
+author: "Madeline Redd"
+date: "2025-02-22"
+output:
+  pdf_document:   
+  toc: TRUE
+  html_document: 
+  word_document: 
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(ggplot2)
+library(markdown)
+
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "forestgreen", high = "black")
+
+```
+
+# R Markdown Formatting Options:
+
+## Headers and Sub headers Example Code
+
+Spaces after Pound Symbol matter to create the headers
+
+# First-level header
+## Second-level header
+### Third-level header
+#### Style and Emphasis
+
+
+
+### Using Asterix Symbol to Alter Format
+
+'**bold**'
+'*italic*'  
+ 
+**Golden Shiner**
+(*Notemigonus crysoleucas*)  
+ 
+
+
+### Using Underscores to Alter Format
+
+'__bold__'
+'_italic_'
+
+__Common Grackle__
+(_Quiscalus quiscula_)
+
+### Creating Lists in Different Ways
+
+Unordered list items start with `*`, `-`, or `+`, and you can nest one
+list within another list by indenting the sub-list.
+
+- Other Blackbirds
+    1. Red-winged Blackbird
+    
+          - _Agelaius phoeniceus_
+        
+    2. Brown-headed Cowbird
+    
+          - _Molothrus ater_
+        
+    3. Yellow-headed Blackbird
+    
+          - _Xanthocephalus xanthocephalus_
+
+
+
+
+## Links
+
+
+[Github Repository: ENTM 6820 Class](https://github.com/Mads-Hamrick/ENTM6820class.git)
+
+
+## Images
+
+Exclamation Point changes from link to producing image. 
+
+![DV3_Question 3B ggplot](DV3_question3B.jpeg)
+
+Common Name  | Alpha Code
+------------- | -------------
+American Crow  | AMCO
+Red-winged Blackbird | RWBL
+Common Grackle | COGR
+
+
+
+```{r}
+kable(head(mtcars, n = 5), digits = 3, format = "markdown")
+```
+
+
+
+## Quotes
+
+Blockquotes are written after `>`, e.g.,
+
+``` markdown
+> "I thoroughly disapprove of duels. If a man should challenge me,
+  I would take him kindly and forgivingly by the hand and lead him
+  to a quiet place and kill him."
+>
+> --- Mark Twain
+```
