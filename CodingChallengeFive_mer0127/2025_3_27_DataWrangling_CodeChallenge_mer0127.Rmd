@@ -52,18 +52,19 @@ Using tidyverse language of functions and the pipe, use the summarise function a
 
  a.	Start with the alpha_even dataframe
  b.	Group the data: group the data by Crop and Time_Point.
- c.	Summarize the data: Calculate the mean, count, standard deviation, and standard error for     the even variable within each group.
+ c.	Summarize the data: Calculate the mean, count, standard deviation, and standard error for the even variable within each group.
  d.	Name the resulting dataframe alpha_average
 
-```{r}
+```{r, warning=FALSE}
 
 alpha_average<- alpha_even%>% 
-  group_by(Crop, Time_Point)%>% 
-  
+  group_by(Crop, Time_Point)%>%  #grouping data by Crop and Time_Point
   summarise(mean.even=mean(even), 
-    n=n(),
-    std.dev=sd(even), 
-    std.err = (std.dev/sqrt(n)))
+    n=n(),  #Count
+    std.dev=sd(even), #Standard Deviation 
+    std.err = (std.dev/sqrt(n)),  #Standard Error
+    .groups = 'drop'  # This will drop the grouping after, added due to warning 
+    )  
 
 head(alpha_average)
 
@@ -103,15 +104,14 @@ Connecting it to plots.
 ```{r}
 
 alpha_average2%>% 
-  select(Time_Point,diff.cotton.even, diff.soybean.even)%>% 
-  pivot_longer(c(diff.cotton.even, diff.soybean.even), 
+  select(Time_Point,diff.cotton.even, diff.soybean.even)%>%  #grouping data
+  pivot_longer(c(diff.cotton.even, diff.soybean.even), #reshaping data
                names_to = "diff")%>%
   ggplot( aes(x = Time_Point, y = value, color = diff, group = diff))+
-  geom_line()+
+  geom_line()+    #creating plot to express the data
   xlab("Time (hrs)")+
   ylab ("Difference from soil in Pielou's evenness")+
-  theme_classic()+
-  theme(strip.background=element_blank())
+  theme_classic()
 
 ```
 
