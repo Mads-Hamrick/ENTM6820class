@@ -15,19 +15,25 @@ output:
 
 Read in the data called “PlantEmergence.csv” using a relative file path and load the following libraries. tidyverse, lme4, emmeans, multcomp, and multcompView. Turn the Treatment , DaysAfterPlanting  and Rep into factors using the function as.factor
 
-```{r, label = 'Packages', warning = FALSE}
+```{r, warning = FALSE}
+
 library(tidyverse)
 library(lme4)
 library(emmeans)
 library(multcompView)
 library(multcomp)
-```
 
-
-```{r}
 PlantEmerg <- read.csv("PlantEmergence.csv")
+str(PlantEmerg)
+
+#Turn the Treatment , DaysAfterPlanting  and Rep into factors using the function as.factor
+
+PlantEmerg$Treatment <- as.factor(PlantEmerg$Treatment)
+PlantEmerg$DaysAfterPlanting <- as.factor(PlantEmerg$DaysAfterPlanting)
+PlantEmerg$Rep <- as.factor(PlantEmerg$Rep)
 
 head(PlantEmerg)
+
 ```
 
 
@@ -37,9 +43,13 @@ Fit a linear model to predict Emergence using Treatment and DaysAfterPlanting al
 
 ```{r}
 
-lm_Q2<- lm(DaysAfterPlanting ~ Emergence, data = PlantEmerg)
+lm_Q2<- lm(Emergence ~ DaysAfterPlanting * Treatment, data = PlantEmerg)
 
 summary(lm_Q2)
+
+aov_Q2<- aov(lm_Q2)
+
+summary(aov_Q2)
 
 ```
 
@@ -49,10 +59,15 @@ summary(lm_Q2)
 Based on the results of the linear model in question 2, do you need to fit the interaction term? Provide a simplified linear model without the interaction term but still testing both main effects. Provide the summary and ANOVA results. Then, interpret the intercept and the coefficient for Treatment 2.
 
 ```{r}
-lm_Q2<- lm(DaysAfterPlanting ~ Emergence, data = PlantEmerg)
+simp_lm_Q3<- lm(Emergence ~ DaysAfterPlanting + Treatment, data = PlantEmerg)
 
-summary(lm_Q2)
+summary(simp_lm_Q3)
 ```
+### Interpertation for Question Three:
+
+Looking at Treatment Two
+Intercept: -134.531 
+Coefficient:
 
 
 ## Question Four
@@ -60,9 +75,13 @@ summary(lm_Q2)
 Calculate the least square means for Treatment using the emmeans package and perform a Tukey separation with the compact letter display using the cld function. Interpret the results.
 
 ```{r}
-lm_Q2<- lm(DaysAfterPlanting ~ Emergence, data = PlantEmerg)
+Q4<-emmeans(simp_lm_Q3, ~ Treatment) 
+                    
 
-summary(lm_Q2)
+Results_Q4 <- cld(Q4, alpha = 0.05, reversed = TRUE, details = TRUE) 
+                                    #Contrast with Tukey adjustment by default 
+
+Results_Q4
 ```
 
 ## Question Five
@@ -117,82 +136,6 @@ plot_cldbars_onefactor <- function(lm_model, factor) {
 Generate the gfm .md file along with a .html, .docx, or .pdf. Commit, and push the .md file to github and turn in the .html, .docx, or .pdf to Canvas. Provide me a link here to your github.
 
 
-[Coding Challenge Seven Link] ()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[Coding Challenge Seven Link](https://github.com/Mads-Hamrick/ENTM6820class/tree/89f9f8cb2ed9120e3835c943c98f6a304e9b0aad/2025_4_3_CodingChallengeSeven_mer0127)
 
 
