@@ -1,0 +1,380 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={2025\_4\_3\_CodingChallengeSeven\_mer0127},
+  pdfauthor={Madeline Redd},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{2025\_4\_3\_CodingChallengeSeven\_mer0127}
+\author{Madeline Redd}
+\date{2025 - 04 - 03}
+
+\begin{document}
+\maketitle
+
+\subsection{Question One}\label{question-one}
+
+Read in the data called ``PlantEmergence.csv'' using a relative file
+path and load the following libraries. tidyverse, lme4, emmeans,
+multcomp, and multcompView. Turn the Treatment , DaysAfterPlanting and
+Rep into factors using the function as.factor
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.0     v stringr   1.5.1
+## v ggplot2   3.5.1     v tibble    3.2.1
+## v lubridate 1.9.4     v tidyr     1.3.1
+## v purrr     1.0.2     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lme4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Matrix
+## 
+## Attaching package: 'Matrix'
+## 
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(emmeans)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Welcome to emmeans.
+## Caution: You lose important information if you filter this package's results.
+## See '? untidy'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(multcompView)}
+\FunctionTok{library}\NormalTok{(multcomp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: mvtnorm
+## Loading required package: survival
+## Loading required package: TH.data
+## Loading required package: MASS
+## 
+## Attaching package: 'MASS'
+## 
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+## 
+## 
+## Attaching package: 'TH.data'
+## 
+## The following object is masked from 'package:MASS':
+## 
+##     geyser
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PlantEmerg }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"PlantEmergence.csv"}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(PlantEmerg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Plot Treatment Rep Emergence DatePlanted DateCounted DaysAfterPlanting
+## 1  101         1   1     180.5    9-May-22   16-May-22                 7
+## 2  102         2   1      54.5    9-May-22   16-May-22                 7
+## 3  103         3   1     195.0    9-May-22   16-May-22                 7
+## 4  104         4   1     198.5    9-May-22   16-May-22                 7
+## 5  105         5   1     202.0    9-May-22   16-May-22                 7
+## 6  106         6   1     184.0    9-May-22   16-May-22                 7
+\end{verbatim}
+
+\subsection{Question Two}\label{question-two}
+
+Fit a linear model to predict Emergence using Treatment and
+DaysAfterPlanting along with the interaction. Provide the summary of the
+linear model and ANOVA results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_Q2}\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(DaysAfterPlanting }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Emergence, }\AttributeTok{data =}\NormalTok{ PlantEmerg)}
+
+\FunctionTok{summary}\NormalTok{(lm\_Q2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = DaysAfterPlanting ~ Emergence, data = PlantEmerg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.9250  -5.1621   0.7038   6.6266  12.5531 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 14.85867    2.67842   5.548 1.37e-07 ***
+## Emergence    0.01471    0.01446   1.017    0.311    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.853 on 142 degrees of freedom
+## Multiple R-squared:  0.007231,   Adjusted R-squared:  0.0002393 
+## F-statistic: 1.034 on 1 and 142 DF,  p-value: 0.3109
+\end{verbatim}
+
+\subsection{Question Three}\label{question-three}
+
+Based on the results of the linear model in question 2, do you need to
+fit the interaction term? Provide a simplified linear model without the
+interaction term but still testing both main effects. Provide the
+summary and ANOVA results. Then, interpret the intercept and the
+coefficient for Treatment 2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_Q2}\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(DaysAfterPlanting }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Emergence, }\AttributeTok{data =}\NormalTok{ PlantEmerg)}
+
+\FunctionTok{summary}\NormalTok{(lm\_Q2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = DaysAfterPlanting ~ Emergence, data = PlantEmerg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.9250  -5.1621   0.7038   6.6266  12.5531 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 14.85867    2.67842   5.548 1.37e-07 ***
+## Emergence    0.01471    0.01446   1.017    0.311    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.853 on 142 degrees of freedom
+## Multiple R-squared:  0.007231,   Adjusted R-squared:  0.0002393 
+## F-statistic: 1.034 on 1 and 142 DF,  p-value: 0.3109
+\end{verbatim}
+
+\subsection{Question Four}\label{question-four}
+
+Calculate the least square means for Treatment using the emmeans package
+and perform a Tukey separation with the compact letter display using the
+cld function. Interpret the results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_Q2}\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(DaysAfterPlanting }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Emergence, }\AttributeTok{data =}\NormalTok{ PlantEmerg)}
+
+\FunctionTok{summary}\NormalTok{(lm\_Q2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = DaysAfterPlanting ~ Emergence, data = PlantEmerg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.9250  -5.1621   0.7038   6.6266  12.5531 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 14.85867    2.67842   5.548 1.37e-07 ***
+## Emergence    0.01471    0.01446   1.017    0.311    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.853 on 142 degrees of freedom
+## Multiple R-squared:  0.007231,   Adjusted R-squared:  0.0002393 
+## F-statistic: 1.034 on 1 and 142 DF,  p-value: 0.3109
+\end{verbatim}
+
+\subsection{Question Five}\label{question-five}
+
+The provided function lets you dynamically add a linear model plus one
+factor from that model and plots a bar chart with letters denoting
+treatment differences. Use this model to generate the plot shown below.
+Explain the significance of the letters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_cldbars\_onefactor }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(lm\_model, factor) \{}
+\NormalTok{  data }\OtherTok{\textless{}{-}}\NormalTok{ lm\_model}\SpecialCharTok{$}\NormalTok{model}
+\NormalTok{  variables }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(lm\_model}\SpecialCharTok{$}\NormalTok{model)}
+\NormalTok{  dependent\_var }\OtherTok{\textless{}{-}}\NormalTok{ variables[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  independent\_var }\OtherTok{\textless{}{-}}\NormalTok{ variables[}\DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(variables)]}
+
+\NormalTok{  lsmeans }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(lm\_model, }\FunctionTok{as.formula}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"\textasciitilde{}"}\NormalTok{, factor))) }\CommentTok{\#Estimate lsmeans }
+\NormalTok{  Results\_lsmeans }\OtherTok{\textless{}{-}} \FunctionTok{cld}\NormalTok{(lsmeans, }\AttributeTok{alpha =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{reversed =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{details =} \ConstantTok{TRUE}\NormalTok{, }
+                \AttributeTok{Letters =}\NormalTok{ letters) }\CommentTok{\# contrast with Tukey adjustment by default.}
+  
+    \CommentTok{\# Extracting the letters for the bars}
+\NormalTok{  sig.diff.letters }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(Results\_lsmeans}\SpecialCharTok{$}\NormalTok{emmeans[,}\DecValTok{1}\NormalTok{], }
+                                 \FunctionTok{str\_trim}\NormalTok{(Results\_lsmeans}\SpecialCharTok{$}\NormalTok{emmeans[,}\DecValTok{7}\NormalTok{]))}
+  \FunctionTok{colnames}\NormalTok{(sig.diff.letters) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(factor, }\StringTok{"Letters"}\NormalTok{)}
+  
+  \CommentTok{\# for plotting with letters from significance test}
+\NormalTok{  ave\_stand2 }\OtherTok{\textless{}{-}}\NormalTok{ lm\_model}\SpecialCharTok{$}\NormalTok{model }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(}\SpecialCharTok{!!}\FunctionTok{sym}\NormalTok{(factor)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}
+      \AttributeTok{ave.emerge =} \FunctionTok{mean}\NormalTok{(.data[[dependent\_var]], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+      \AttributeTok{se =} \FunctionTok{sd}\NormalTok{(.data[[dependent\_var]]) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{n}\NormalTok{())}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{left\_join}\NormalTok{(sig.diff.letters, }\AttributeTok{by =}\NormalTok{ factor) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{letter\_position =}\NormalTok{ ave.emerge }\SpecialCharTok{+} \DecValTok{10} \SpecialCharTok{*}\NormalTok{ se)}
+  
+\NormalTok{  plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{!!} \FunctionTok{sym}\NormalTok{(factor), }\AttributeTok{y =} \SpecialCharTok{!!} \FunctionTok{sym}\NormalTok{(dependent\_var))) }\SpecialCharTok{+} 
+    \FunctionTok{stat\_summary}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ mean, }\AttributeTok{geom =} \StringTok{"bar"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{stat\_summary}\NormalTok{(}\AttributeTok{fun.data =}\NormalTok{ mean\_se, }\AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(}\StringTok{"Number of emerged plants"}\NormalTok{) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.02}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{data =}\NormalTok{ ave\_stand2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ Letters, }\AttributeTok{y =}\NormalTok{ letter\_position), }
+              \AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{xlab}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(factor)) }\SpecialCharTok{+}
+    \FunctionTok{theme\_classic}\NormalTok{()}
+  
+  \FunctionTok{return}\NormalTok{(plot)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Question Six}\label{question-six}
+
+Generate the gfm .md file along with a .html, .docx, or .pdf. Commit,
+and push the .md file to github and turn in the .html, .docx, or .pdf to
+Canvas. Provide me a link here to your github.
+
+{[}Coding Challenge Seven Link{]} ()
+
+\end{document}
