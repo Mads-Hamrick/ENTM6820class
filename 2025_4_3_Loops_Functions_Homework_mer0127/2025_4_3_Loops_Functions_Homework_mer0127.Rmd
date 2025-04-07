@@ -1,0 +1,309 @@
+---
+title: "2025_4_3_Loops_Functions_Homework_mer0127"
+author: "Madeline Redd"
+date: "`r format(Sys.time(), '%Y - %m - %d')`"
+output:
+  pdf_document:   
+  toc: TRUE
+  html_document: 
+  word_document: 
+---
+In this exercise we will explore ways of iteration in R and writing functions. 
+    #We have used a lot of for loops in population modeling in fish populations!
+
+```{r, label = 'Packages', warning = FALSE}
+
+install.packages("drc")
+
+library(drc)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+
+```
+
+# Functions
+Functions are like those written into packages. They are useful when you need to perform the same code on different data and you want to avoid copy and paste errors. 
+
+Functions are useful to simplify your code, and make your data management as reproducible as possible. 
+
+Example:
+
+Making a function to convert Fahrenheit to Celsius
+
+Formula -->  #Such a cool output!
+
+$$
+(ºF - 32) * \frac{5}{9}
+$$
+
+
+```{r, eval=F}
+# (5*(degree_f - 32)/9)  example of equation structure
+
+(5*(32 - 32)/9) #Input 32 degrees Fahrenheit that would equal 0
+
+
+(5*(80 - 32)/9) #Input 80 degrees Fahrenheit to see degrees in Celsius
+
+```
+
+Creating a Function to calculate based on the imputed code below:
+
+```{r}
+
+
+Convert_Fahrenheit_to_Celsius <- function(fahrenheit_temp){
+  celsius <- (5*(fahrenheit_temp - 32)/9)
+  return(celsius)
+}
+
+Convert_Fahrenheit_to_Celsius(32) #using function to confirm results
+
+Convert_Fahrenheit_to_Celsius(80)
+
+Convert_Fahrenheit_to_Celsius(95) #simplified degrees to compare function below
+
+```
+
+
+Example of what Function Building Breakdown looks like -->
+```{r, eval=F}
+sample.function <- function(... variable goes here ...){
+  .... code goes here.... 
+  return(... output ...)
+}
+```
+
+
+## Write a function to convert Celsius to Fahrenheit using the conversion of F = C x (9/5)+32
+
+```{r}
+
+Convert_C_to_F <- function(Celsius_Degree){
+  Fahrenheit <- Celsius_Degree * (9/5) + 32
+
+  return(Fahrenheit)}
+
+Convert_C_to_F(0)
+
+Convert_C_to_F(35)
+
+```
+
+# More Complicated Function Usage
+
+Lets use a function to return multiple R elements. We can do this to return different R objects such as a dataframe, a ggplot, and others. 
+
+In this example we are going to write a function to do perform a specific test on multiple variables within a dataset and generate a plot for them. 
+
+```{r}
+
+```
+
+
+# Iterations
+
+Iterations are something you do over and over again. They are useful for multiple reasons. In terms of reproducibility, it again, helps reduce copy and paste errors for something we would like to do over and over again. It can also helpful for sanity checks through data simulation. 
+
+In this example we will cover iterations in the following functions
+ - rep()
+ - seq() & seq_along()
+ - for loops 
+ - map()
+ - nested map()
+
+## The `rep()` function
+
+The rep() function allows you to repeat elements easily 
+```{r}
+rep("A", 3) # repeats A three times 
+rep(c("A", "B"), 5) # repeats A and B, times 
+rep(c(1,2,3,4), times = 4) # repeats 1,2,3,4, 4 times 
+rep(c(1,2,5,2), times = 4, each = 4) # repeats 1 four times, 2 four times, 5 four times, and 2 four times. 
+```
+
+
+```{r}
+seq(from = 1, to = 7) # sequence of numbers 1 to 7
+seq(from = 0, to = 10, by = 2) # sequence of numbers from 0 to 10 by 2s 
+
+# combined seq() and rep()
+rep(seq(from = 0, to = 10, by = 2), times = 3, each = 2)
+```
+
+
+ 
+```{r}
+# use the built in LETTERS vector for an example. 
+LETTERS
+seq_along(LETTERS[1:5]) # will return 1,2,3,4,5 not the actual letters. 
+```
+
+#For loop
+
+
+```{r}
+for (i in 1:10) {
+print(i*2)  
+}
+```
+
+
+```{r}
+EC50.data <- read.csv("EC50_all.csv")
+```
+
+
+
+```{r}
+isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == "ILSO_5-41c"] ~ 
+        EC50.data$conc[EC50.data$is == "ILSO_5-41c"], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+```
+
+
+
+
+```{r}
+nm <- unique(EC50.data$is)
+```
+
+
+
+```{r}
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+}
+
+```
+
+
+ 
+```{r}
+EC50.ll4 <- NULL # create a null object 
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+    isolate.ec_i <- data.frame(nm[[i]], EC50) # create a one row dataframe containing just the isolate name and the EC50
+    colnames(isolate.ec_i) <- c("Isolate", "EC50") # change the column names
+    
+    # Then we need to append our one row dataframe to our null dataframe we created before
+    # and save it as EC50.ll4. 
+    EC50.ll4 <- rbind.data.frame(EC50.ll4, isolate.ec_i)
+}
+```
+  
+  
+```{r}
+ggplot(EC50.ll4, aes(x = EC50)) +
+  geom_histogram() +
+  theme_classic() 
+```
+
+ 
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```
+
+ 
+ 
+```{r}
+EC50.data %>%
+  group_by(is)
+```
+
+ 
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest()
+```
+
+  
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50")))))
+```
+
+ 
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]]))
+```
+
+  
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```

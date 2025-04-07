@@ -8,6 +8,8 @@ output:
   pdf_document: 
     keep_tex: TRUE
     latex_engine: xelatex
+  html_document: 
+  word_document:
 ---
 
 
@@ -47,7 +49,7 @@ lm_Q2<- lm(Emergence ~ DaysAfterPlanting * Treatment, data = PlantEmerg)
 
 summary(lm_Q2)
 
-aov_Q2<- aov(lm_Q2)
+aov_Q2<- anova(lm_Q2)
 
 summary(aov_Q2)
 
@@ -59,15 +61,29 @@ summary(aov_Q2)
 Based on the results of the linear model in question 2, do you need to fit the interaction term? Provide a simplified linear model without the interaction term but still testing both main effects. Provide the summary and ANOVA results. Then, interpret the intercept and the coefficient for Treatment 2.
 
 ```{r}
-simp_lm_Q3<- lm(Emergence ~ DaysAfterPlanting + Treatment, data = PlantEmerg)
 
-summary(simp_lm_Q3)
+simp_lm_Q3<- lm(Emergence ~ DaysAfterPlanting + Treatment, data = PlantEmerg)
+summary(simp_lm_Q3)        
+
+  #Do we need to relevel to get treatment two being the reference group?
+                    #Might be over thinking the question.
+simp_lm_Q3_relevel<- lm(Emergence ~ DaysAfterPlanting + 
+                   relevel(PlantEmerg$Treatment, ref = "2"), data = PlantEmerg)
+summary(simp_lm_Q3_relevel)
+
+simp_anova_Q3 <- anova(simp_lm_Q3)
+
+summary(simp_anova_Q3)
+
 ```
 ### Interpertation for Question Three:
 
-Looking at Treatment Two
-Intercept: -134.531 
-Coefficient:
+Looking at Treatment Two 
+Intercept: 47.632 (or 182.163, technically wouldn't this be the reference for treatment 1)
+Coefficient: -134.531
+
+Treatment two decreases plant emergence by 134.531. 
+Plant emergence at day 7 in reference to treatment two is 47.632.
 
 
 ## Question Four
@@ -77,11 +93,11 @@ Calculate the least square means for Treatment using the emmeans package and per
 ```{r}
 Q4<-emmeans(simp_lm_Q3, ~ Treatment) 
                     
-
-Results_Q4 <- cld(Q4, alpha = 0.05, reversed = TRUE, details = TRUE) 
-                                    #Contrast with Tukey adjustment by default 
-
+Results_Q4<- cld(Q4, alpha = 0.05, reversed = TRUE, details = TRUE, 
+                 Letters = letters)  
+                        #Perform Tukey separation with compact letter display
 Results_Q4
+
 ```
 
 ## Question Five
@@ -99,12 +115,12 @@ plot_cldbars_onefactor <- function(lm_model, factor) {
   Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE, 
                 Letters = letters) # contrast with Tukey adjustment by default.
   
-    # Extracting the letters for the bars
+  #Extracting the letters for the bars
   sig.diff.letters <- data.frame(Results_lsmeans$emmeans[,1], 
                                  str_trim(Results_lsmeans$emmeans[,7]))
   colnames(sig.diff.letters) <- c(factor, "Letters")
   
-  # for plotting with letters from significance test
+  #Plotting with letters from significance test
   ave_stand2 <- lm_model$model %>%
     group_by(!!sym(factor)) %>%
     dplyr::summarize(
@@ -126,6 +142,8 @@ plot_cldbars_onefactor <- function(lm_model, factor) {
   
   return(plot)
 }
+
+plot_cldbars_onefactor(simp_lm_Q3, "Treatment" )
 
 ```
 
