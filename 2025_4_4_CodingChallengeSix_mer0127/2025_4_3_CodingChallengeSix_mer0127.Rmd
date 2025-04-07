@@ -157,9 +157,10 @@ head(CITIES)
 
 Write a function to calculate the distance between two pairs of coordinates based on the Haversine formula (see below). The input into the function should be lat1, lon1, lat2, and lon2. The function should return the object distance_km. All the code below needs to go into the function.
 
-```{r}
+
 
 #GIVEN CODE -->
+
 #Convert to radians
 rad.lat1 <- lat1 * pi/180
 rad.lon1 <- lon1 * pi/180
@@ -172,14 +173,37 @@ delta_lon <- rad.lon2 - rad.lon1
 a <- sin(delta_lat / 2)^2 + cos(rad.lat1) * cos(rad.lat2) * sin(delta_lon / 2)^2
 c <- 2 * asin(sqrt(a)) 
 
-#Earth's radius in kilometers
-earth_radius <- 6378137
 
-#Calculate the distance
-distance_km <- (earth_radius * c)/1000
+earth_radius <- 6378137 #Earth's radius in kilometers
+
+
+distance_km <- (earth_radius * c)/1000 #Calculate the distance
+
+
+
+```{r}
+#Function Code
+
+Calculate_Distance <-function (lat1, lon1, lat2, lon2){
+
+rad.lat1 <- lat1 * pi/180
+rad.lon1 <- lon1 * pi/180
+rad.lat2 <- lat2 * pi/180
+rad.lon2 <- lon2 * pi/180
+
+delta_lat <- rad.lat2 - rad.lat1
+delta_lon <- rad.lon2 - rad.lon1
+a <- sin(delta_lat / 2)^2 + cos(rad.lat1) * cos(rad.lat2) * sin(delta_lon / 2)^2
+
+c <- 2 * asin(sqrt(a)) 
+
+Earth_Radius <- 6378137
+
+distance_km <- (Earth_Radius * c)/1000
+return (distance_km)
+}
 
 ```
-
 
 ## Question Five
 
@@ -189,9 +213,14 @@ Using your function, compute the distance between Auburn, AL and New York City
 
 ```{r}
 
+AU_lat=CITIES$lat[CITIES$city=="Auburn"]
+AU_lon=CITIES$long[CITIES$city=="Auburn"]
+NY_lat=CITIES$lat[CITIES$city=="New York"]
+NY_lon=CITIES$long[CITIES$city=="New York"]
+
+Calculate_Distance(AU_lat,AU_lon, NY_lat, NY_lon)
+
 ```
-
-
 
 ## Question Six
 
@@ -200,6 +229,24 @@ Now, use your function within a for loop to calculate the distance between all o
 
 
 ```{r}
+
+# Calculate distances and add to csv file
+
+VALUES<- unique(CITIES$city)
+
+distances <- numeric(length(VALUES))
+ 
+ for (i in seq_along(VALUES)) {
+   lat1 <- CITIES$lat[CITIES$city == "Auburn"]
+   lon1 <- CITIES$lon[CITIES$city == "Auburn"]
+   lat2 <- CITIES$lat[CITIES$city == VALUES[i]]
+   lon2 <- CITIES$lon[CITIES$city == VALUES[i]]
+   distances[i] <- Calculate_Distance(lat1, lon1, lat2, lon2)
+ }
+ 
+CITIES$distance_from_Auburn <- distances
+ 
+head(CITIES)
 
 ```
 
@@ -210,6 +257,23 @@ Now, use your function within a for loop to calculate the distance between all o
 Bonus point if you can have the output of each iteration append a new row to a dataframe, generating a new column of data. In other words, the loop should create a dataframe with three columns called city1, city2, and distance_km, as shown below. The first six rows of the dataframe are shown below.
 
 
+```{r}
+VALUES <- unique(CITIES$city)
+different_distances <- data.frame(city1 = character(), city2 = character(), distance_km = numeric())
+ 
+ for (i in seq_along(nm)) {
+   lat1 <- CITIES$lat[CITIES$city == "Auburn"]
+   lon1 <- CITIES$lon[CITIES$city == "Auburn"]
+   lat2 <- CITIES$lat[CITIES$city == VALUES[i]]
+   lon2 <- CITIES$lon[CITIES$city == VALUES[i]]
+   distance_km <- Calculate_Distance(lat1, lon1, lat2, lon2)
+   
+   result_i <- data.frame(city1 = "Auburn", city2 = VALUES[i], distance_km = distance_km)
+   different_distances <- rbind(different_distances, result_i)
+ }
+ 
+head(different_distances)
+```
 
 
 
@@ -219,7 +283,7 @@ Bonus point if you can have the output of each iteration append a new row to a d
 Commit and push a gfm .md file to GitHub inside a directory called Coding Challenge 6. Provide me a link to your github written as a clickable link in your .pdf or .docx
 
 
-[Coding Challenge Six]()
+[Coding Challenge Six](https://github.com/Mads-Hamrick/ENTM6820class/tree/9c303debe9565060bec454ea4d538b01e052f478/2025_4_4_CodingChallengeSix_mer0127)
 
 
 
